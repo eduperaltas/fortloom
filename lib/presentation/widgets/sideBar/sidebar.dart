@@ -4,9 +4,9 @@ import 'package:fortloom/core/framework/colors.dart';
 import 'package:fortloom/core/framework/globals.dart';
 import 'package:fortloom/presentation/views/login_register/login.dart';
 import 'package:fortloom/presentation/widgets/circlularimg.dart';
-import 'package:fortloom/presentation/widgets/sideBar/menuItem.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
 import 'package:flutter/material.dart';
+import 'package:fortloom/presentation/widgets/sideBar/menuItem.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rxdart/rxdart.dart';
@@ -126,7 +126,7 @@ class _SideBarState extends State<SideBar>
                             )
                           ],
                         )),
-                    MenuItem(
+                     MenuItemS(
                       icon: Icons.home,
                       title: "Home",
                       onTap: () {
@@ -136,7 +136,7 @@ class _SideBarState extends State<SideBar>
                       },
                     ),
                     dividerLine(),
-                    MenuItem(
+                    MenuItemS(
                       icon: Icons.article,
                       title: "Posts",
                       onTap: () {
@@ -146,7 +146,7 @@ class _SideBarState extends State<SideBar>
                       },
                     ),
                     dividerLine(),
-                    MenuItem(
+                    MenuItemS(
                       icon: Icons.event,
                       title: "Events",
                       onTap: () {
@@ -156,7 +156,7 @@ class _SideBarState extends State<SideBar>
                       },
                     ),
                     dividerLine(),
-                    MenuItem(
+                    MenuItemS(
                       icon: Icons.group,
                       title: "Forum",
                       onTap: () {
@@ -166,7 +166,7 @@ class _SideBarState extends State<SideBar>
                       },
                     ),
                     dividerLine(),
-                    MenuItem(
+                    MenuItemS(
                       icon: Icons.settings,
                       title: "Configure",
                       onTap: () {
@@ -179,7 +179,7 @@ class _SideBarState extends State<SideBar>
                       child: Container(
                         alignment: Alignment.bottomCenter,
                         margin: const EdgeInsets.only(bottom: 20),
-                        child: MenuItem(
+                        child: MenuItemS(
                           icon: Icons.exit_to_app,
                           title: "Logout",
                           onTap: () {

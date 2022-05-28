@@ -1,12 +1,12 @@
 import 'package:fortloom/core/framework/colors.dart';
 import 'package:flutter/material.dart';
 
-class MenuItem extends StatelessWidget {
+class MenuItemS extends StatelessWidget {
   final IconData icon;
   final String title;
   final dynamic onTap;
 
-  const MenuItem(
+  const MenuItemS(
       {Key? key, required this.icon, required this.title, required this.onTap})
       : super(key: key);
 
