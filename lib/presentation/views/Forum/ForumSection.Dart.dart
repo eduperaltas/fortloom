@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:fortloom/presentation/views/Forum/ForumCreate.dart';
 
 
 class ForumSection extends StatefulWidget {
@@ -27,7 +28,11 @@ class _ForumSectionState extends State<ForumSection> {
                      child: IconButton(
                        icon: const Icon(Icons.add),
                        color: Colors.black,
-                       onPressed: () {},),
+                       onPressed: () {
+                         Navigator.of(context).push(MaterialPageRoute(
+                             builder: (context)=> ForumCreate(),
+                         ));
+                       },),
 
                    ),
                  ),
