@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fortloom/presentation/views/login_register/login.dart';
+import 'package:fortloom/presentation/views/event/eventview.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: Event(),
     );
   }
 }
