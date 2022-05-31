@@ -1,5 +1,7 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fortloom/core/framework/colors.dart';
 import 'package:fortloom/core/framework/globals.dart';
+import 'package:fortloom/core/service/AuthService.dart';
 import 'package:fortloom/presentation/views/initScreen.dart';
 import 'package:fortloom/presentation/views/login_register/register.dart';
 import 'package:fortloom/presentation/widgets/buttonLarge.dart';
@@ -10,9 +12,14 @@ import 'package:page_transition/page_transition.dart';
 class Login extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  AuthService authService= new AuthService();
   @override
   Widget build(BuildContext context) {
+
+
+
+
+
     // String password = '';
     txtForm _txtFormemail = txtForm(
       title: 'Email',
@@ -26,6 +33,15 @@ class Login extends StatelessWidget {
       inputType: InputType.Password,
       txtColor: Colors.white,
     );
+
+    final storage= new FlutterSecureStorage();
+    Login(BuildContext context) async{
+
+      var result= await authService.Login(_emailController.text.trim(), _passwordController.text.trim());
+      print(result);
+      await storage.write(key: "token", value: result);
+    }
+
 
     return Scaffold(
       backgroundColor: background1,
@@ -65,11 +81,7 @@ class Login extends StatelessWidget {
             ButtonLarge(
                 text: 'Ingresar',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: InitScreen(),
-                          type: PageTransitionType.rightToLeft));
+                         Login(context);
                 }),
             GestureDetector(
               onTap: () {

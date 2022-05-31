@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:fortloom/core/service/AuthService.dart';
 import 'package:fortloom/core/service/ForumService.dart';
 import 'package:fortloom/presentation/views/Forum/ForumSection.Dart.dart';
 
@@ -15,8 +16,31 @@ class ForumCreate extends StatefulWidget {
 class _ForumCreateState extends State<ForumCreate> {
 
   ForumService forumService=new ForumService();
+  AuthService authService= new AuthService();
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController DescriptionController = new TextEditingController();
+  String username="Usuario";
+
+  @override
+  void initState() {
+
+    super.initState();
+    String tep;
+
+    this.authService.getToken().then((result){
+
+      setState(() {
+        tep= result.toString();
+        username=this.authService.GetUsername(tep);
+      });
+
+
+    }) ;
+
+
+
+  }
+
 
 
   @override
@@ -26,6 +50,7 @@ class _ForumCreateState extends State<ForumCreate> {
         body: Card(
           child: Column(
             children: [
+              Text(username),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text("Create Forum",
