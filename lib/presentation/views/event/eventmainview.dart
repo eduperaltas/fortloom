@@ -2,15 +2,17 @@ import 'package:fortloom/core/framework/globals.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
 import 'package:flutter/material.dart';
+import 'package:fortloom/domain/entities/event.dart';
+import 'package:fortloom/presentation/views/event/eventlistview.dart';
 
-class Event extends StatefulWidget {
-  const Event({Key? key}) : super(key: key);
+class EventMainView extends StatefulWidget {
+  const EventMainView({Key? key}) : super(key: key);
 
   @override
-  State<Event> createState() => _EventState();
+  State<EventMainView> createState() => _EventState();
 }
 
-class _EventState extends State<Event> {
+class _EventState extends State<EventMainView> {
 
   bool post = false;
 
@@ -19,16 +21,16 @@ class _EventState extends State<Event> {
     return ScreenBase(
       body:Center(
           child:Container(
-              child:Column(
-                  children: <Widget>[
-                    SizedBox(height: 30,),
-                    CardMainEvent(),
-                    SizedBox(height: 30,),
-                    ShowForm(),
-                    SizedBox(height: 20,),
-                    ShowButtons()
-                  ]
-              )
+            child: Column(
+                children: <Widget>[
+                  SizedBox(height: 10,),
+                  CardMainEvent(),
+                  SizedBox(height: 10,),
+                  ShowForm(),
+                  SizedBox(height: 10,),
+                  ShowButtons()
+                ]
+            )
           )
       )
     );
@@ -129,22 +131,18 @@ class _EventState extends State<Event> {
   }
 
   Widget ShowButtons(){
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 20,),
-        RaisedButton(
-            onPressed: (){},
-            child: Text("Show All Events"),
-            color:Colors.white
-        ),
-        SizedBox(width: 100,),
-        RaisedButton(
-            onPressed: (){},
-            child: Text("Not Show Events"),
-            color:Colors.white
-        ),
-      ],
-    );
+    return Center(
+          child: RaisedButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EventListView())
+                );
+              },
+              child: Text("Show All Events"),
+              color:Colors.white
+          ),
+        );
   }
 
   Widget ShowForm(){
