@@ -10,7 +10,7 @@ import 'package:fortloom/presentation/widgets/sideBar/menuItem.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rxdart/rxdart.dart';
-
+import 'package:fortloom/presentation/views/Forum/ForumSection.Dart.dart';
 class SideBar extends StatefulWidget {
   @override
   _SideBarState createState() => _SideBarState();
@@ -161,8 +161,10 @@ class _SideBarState extends State<SideBar>
                       title: "Forum",
                       onTap: () {
                         onIconPressed();
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(NavigationEvents.homeScreenClickedEvent);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ForumSection()),
+                        );
                       },
                     ),
                     dividerLine(),
