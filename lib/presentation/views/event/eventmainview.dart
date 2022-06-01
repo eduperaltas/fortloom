@@ -15,6 +15,9 @@ class EventMainView extends StatefulWidget {
 class _EventState extends State<EventMainView> {
 
   bool post = false;
+  var nametextfield = TextEditingController();
+  var descriptiontextfield = TextEditingController();
+  var datetextfield = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +80,7 @@ class _EventState extends State<EventMainView> {
                 Text("Create your Event!"),
                 SizedBox(height: 10,),
                 TextField(
+                  controller: nametextfield,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(10),
                     hintText: 'EventName',
@@ -84,6 +88,7 @@ class _EventState extends State<EventMainView> {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  controller: descriptiontextfield,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(10),
                     hintText: 'EventDescription',
@@ -91,6 +96,7 @@ class _EventState extends State<EventMainView> {
                 ),
                 SizedBox(height: 10,),
                 TextField(
+                  controller: datetextfield,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(10),
                     hintText: 'Date',
@@ -112,7 +118,11 @@ class _EventState extends State<EventMainView> {
                     ),
                     SizedBox(width: 10,),
                     RaisedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          nametextfield.text = '';
+                          descriptiontextfield.text = '';
+                          datetextfield.text = '';
+                        },
                         child:Text("Clean"),
                         color:Colors.white
                     ),
