@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:fortloom/core/service/AuthService.dart';
 import 'package:fortloom/core/service/ForumService.dart';
+import 'package:fortloom/domain/entities/PersonResource.dart';
 import 'package:fortloom/presentation/views/Forum/ForumSection.Dart.dart';
 
 
@@ -20,6 +21,7 @@ class _ForumCreateState extends State<ForumCreate> {
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController DescriptionController = new TextEditingController();
   String username="Usuario";
+  PersonResource personResource= new PersonResource(0, "username", "realname", "lastname", "email", "password");
 
   @override
   void initState() {
@@ -27,11 +29,24 @@ class _ForumCreateState extends State<ForumCreate> {
     super.initState();
     String tep;
 
+
+
     this.authService.getToken().then((result){
 
       setState(() {
         tep= result.toString();
         username=this.authService.GetUsername(tep);
+
+         this.authService.getperson(username).then((result) {
+
+           setState(() {
+             personResource=result;
+           });
+
+         });
+
+
+
       });
 
 
@@ -50,7 +65,7 @@ class _ForumCreateState extends State<ForumCreate> {
         body: Card(
           child: Column(
             children: [
-              Text(username),
+              Text(personResource.username),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text("Create Forum",
@@ -106,7 +121,7 @@ class _ForumCreateState extends State<ForumCreate> {
                 alignment: Alignment.bottomRight,
                 child:FloatingActionButton(onPressed:(){
                   heroTag: "heroTag";
-                  forumService.addForum(nameController.text.trim(), DescriptionController.text.trim());
+                  forumService.addForum(nameController.text.trim(), DescriptionController.text.trim(),personResource.id);
 
                   Navigator.pop(context, true);
                 },

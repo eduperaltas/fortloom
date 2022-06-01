@@ -1,6 +1,7 @@
 
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fortloom/domain/entities/PersonResource.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'dart:convert';
@@ -34,6 +35,21 @@ class AuthService{
     return jsonData["token"];
 
   }
+  Future<PersonResource>getperson(String getUsername) async{
+
+    final response = await http.get(Uri.parse("http://192.168.0.201:8080/api/v1/users/Username/"+getUsername));
+    log.i(response.body);
+    log.i(response.statusCode);
+    String body = utf8.decode(response.bodyBytes);
+    final jsonData = jsonDecode(body);
+    PersonResource personResource=new PersonResource(jsonData["id"], jsonData["username"], jsonData["realname"], jsonData["lastname"], jsonData["email"],
+        jsonData["password"]);
+    return personResource;
+
+  }
+
+
+
   Future<void> StoreToken(String token) async{
 
 

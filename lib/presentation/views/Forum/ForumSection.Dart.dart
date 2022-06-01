@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fortloom/core/service/ForumService.dart';
 import 'package:fortloom/presentation/views/Forum/ForumCreate.dart';
 import 'package:fortloom/presentation/views/Forum/ForumPage.dart';
+import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/sidebarLayout.dart';
 import '../../../domain/entities/ForumResource.dart';
 
@@ -57,7 +58,7 @@ class _ForumSectionState extends State<ForumSection> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-         home:Scaffold(
+         home:ScreenBase(
 
            body: SingleChildScrollView(
              physics: ClampingScrollPhysics(),

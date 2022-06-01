@@ -29,13 +29,13 @@ class ForumService {
 
   }
 
-  Future<http.Response> addForum(String name,String description) async{
+  Future<http.Response> addForum(String name,String description,int userID) async{
        Map data ={
          'forumname': '$name',
          'forumdescription': '$description',
        };
        var body = json.encode(data);
-       final response = await http.post(Uri.parse("http://192.168.0.201:8080/api/v1/user/1/forums"),
+       final response = await http.post(Uri.parse("http://192.168.0.201:8080/api/v1/user/"+userID.toString()+"/forums"),
            headers: {"Content-Type": "application/json"}, body: body
        );
        log.i(response.body);
