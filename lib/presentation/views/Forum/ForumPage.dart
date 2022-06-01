@@ -6,6 +6,7 @@ import 'package:fortloom/domain/entities/PersonResource.dart';
 
 import '../../../core/service/ForumCommentService.dart';
 import '../../../domain/entities/ForumCommentResource.dart';
+import '../../widgets/screenBase.dart';
 
 
 class ForumPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _ForumPageState extends State<ForumPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+      home: ScreenBase(
         body: SingleChildScrollView(
           child: Column(
             children: [

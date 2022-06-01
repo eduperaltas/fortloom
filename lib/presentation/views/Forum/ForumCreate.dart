@@ -5,6 +5,8 @@ import 'package:fortloom/core/service/ForumService.dart';
 import 'package:fortloom/domain/entities/PersonResource.dart';
 import 'package:fortloom/presentation/views/Forum/ForumSection.Dart.dart';
 
+import '../../widgets/screenBase.dart';
+
 
 
 class ForumCreate extends StatefulWidget {
@@ -61,7 +63,7 @@ class _ForumCreateState extends State<ForumCreate> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+      home: ScreenBase(
         body: Card(
           child: Column(
             children: [
