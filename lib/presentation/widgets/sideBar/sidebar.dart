@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fortloom/core/framework/colors.dart';
 import 'package:fortloom/core/framework/globals.dart';
+import 'package:fortloom/presentation/views/event/eventmainview.dart';
 import 'package:fortloom/presentation/views/login_register/login.dart';
 import 'package:fortloom/presentation/widgets/circlularimg.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
@@ -151,8 +152,10 @@ class _SideBarState extends State<SideBar>
                       title: "Events",
                       onTap: () {
                         onIconPressed();
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(NavigationEvents.homeScreenClickedEvent);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EventMainView()),
+                        );
                       },
                     ),
                     dividerLine(),

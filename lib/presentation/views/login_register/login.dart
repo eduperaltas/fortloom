@@ -40,6 +40,12 @@ class Login extends StatelessWidget {
       var result= await authService.Login(_emailController.text.trim(), _passwordController.text.trim());
       print(result);
       await storage.write(key: "token", value: result);
+      Navigator.push(
+          context,
+          PageTransition(
+              child: InitScreen(),
+              type: PageTransitionType.rightToLeft));
+
     }
 
 
