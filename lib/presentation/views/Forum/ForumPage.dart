@@ -44,6 +44,7 @@ class _ForumPageState extends State<ForumPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: ScreenBase(
         body: SingleChildScrollView(
           child: Column(

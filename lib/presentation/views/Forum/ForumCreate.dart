@@ -63,6 +63,7 @@ class _ForumCreateState extends State<ForumCreate> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: ScreenBase(
         body: Card(
           child: Column(
