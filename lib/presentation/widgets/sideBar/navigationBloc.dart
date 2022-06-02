@@ -1,8 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fortloom/presentation/views/Forum/ForumSection.Dart.dart';
+import 'package:fortloom/presentation/views/event/eventmainview.dart';
 import 'package:fortloom/presentation/views/home/homeScreen.dart';
 import 'package:fortloom/presentation/views/posts/postScreen.dart';
 
-enum NavigationEvents { homeScreenClickedEvent, postScreenClickedEvent }
+import '../../views/artist/artistView.dart';
+import '../../views/configure/configureview.dart';
+
+enum NavigationEvents { homeScreenClickedEvent, postScreenClickedEvent,EventScreenClickedEvent,ForumScreenClickedEvent,ArtistScreenClickedEvent,ConfigureScreenClickedEvent }
 
 class NavigationStates {}
 
@@ -15,6 +20,18 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
           break;
         case NavigationEvents.postScreenClickedEvent:
           emit(PostScreen());
+          break;
+        case NavigationEvents.EventScreenClickedEvent:
+          emit(EventMainView());
+          break;
+        case NavigationEvents.ForumScreenClickedEvent:
+          emit(ForumSection());
+          break;
+        case NavigationEvents.ArtistScreenClickedEvent:
+          emit(ArtistView());
+          break;
+        case NavigationEvents.ConfigureScreenClickedEvent:
+          emit(EditProfilePage());
           break;
       }
     });

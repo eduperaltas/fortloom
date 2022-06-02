@@ -152,10 +152,9 @@ class _SideBarState extends State<SideBar>
                       title: "Events",
                       onTap: () {
                         onIconPressed();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => EventMainView()),
-                        );
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(NavigationEvents.EventScreenClickedEvent);
+
                       },
                     ),
                     dividerLine(),
@@ -164,10 +163,18 @@ class _SideBarState extends State<SideBar>
                       title: "Forum",
                       onTap: () {
                         onIconPressed();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ForumSection()),
-                        );
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(NavigationEvents.ForumScreenClickedEvent);
+                      },
+                    ),
+                    dividerLine(),
+                    MenuItemS(
+                      icon: Icons.person,
+                      title: "Artist",
+                      onTap: () {
+                        onIconPressed();
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(NavigationEvents.ArtistScreenClickedEvent);
                       },
                     ),
                     dividerLine(),
@@ -175,11 +182,12 @@ class _SideBarState extends State<SideBar>
                       icon: Icons.settings,
                       title: "Configure",
                       onTap: () {
-                        // onIconPressed();
-                        // BlocProvider.of<NavigationBloc>(context)
-                        //     .add(NavigationEvents.clientesScreenClickedEvent);
+                        onIconPressed();
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(NavigationEvents.ConfigureScreenClickedEvent);
                       },
                     ),
+
                     Expanded(
                       child: Container(
                         alignment: Alignment.bottomCenter,

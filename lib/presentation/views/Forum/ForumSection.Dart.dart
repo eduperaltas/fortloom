@@ -8,9 +8,10 @@ import 'package:fortloom/presentation/views/Forum/ForumPage.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/sidebarLayout.dart';
 import '../../../domain/entities/ForumResource.dart';
+import '../../widgets/sideBar/navigationBloc.dart';
 
 
-class ForumSection extends StatefulWidget {
+class ForumSection extends StatefulWidget with NavigationStates{
   const ForumSection({Key? key}) : super(key: key);
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fortloom/presentation/views/login_register/login.dart';
 
 import '../../../core/framework/globals.dart';
 
@@ -253,10 +254,16 @@ class _SettingsPageState extends State<SettingsPage> {
             ) ,
             actions: <Widget>[
               CupertinoActionSheetAction(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+                    );
+                  },
                   child: Text("Leave",
                   style: TextStyle(
                     color: Colors.black
+
                   ),
                   ),
               ),

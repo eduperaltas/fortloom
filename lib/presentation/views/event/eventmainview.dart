@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fortloom/domain/entities/event.dart';
 import 'package:fortloom/presentation/views/event/eventlistview.dart';
 
-class EventMainView extends StatefulWidget {
+class EventMainView extends StatefulWidget with NavigationStates{
   const EventMainView({Key? key}) : super(key: key);
 
   @override
