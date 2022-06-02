@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fortloom/presentation/views/artist/artistView.dart';
 import 'package:fortloom/presentation/views/event/eventlistview.dart';
 import 'package:fortloom/presentation/views/login_register/login.dart';
 import 'package:fortloom/presentation/views/event/eventmainview.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: EventMainView(),
+      home: ArtistView(),
     );
   }
 }
