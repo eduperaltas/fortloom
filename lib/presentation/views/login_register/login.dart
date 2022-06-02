@@ -70,7 +70,7 @@ class Login extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 25,
+                    fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                     decoration: TextDecoration.none),

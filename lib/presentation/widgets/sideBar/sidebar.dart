@@ -143,7 +143,7 @@ class _SideBarState extends State<SideBar>
                       onTap: () {
                         onIconPressed();
                         BlocProvider.of<NavigationBloc>(context)
-                            .add(NavigationEvents.homeScreenClickedEvent);
+                            .add(NavigationEvents.postScreenClickedEvent);
                       },
                     ),
                     dividerLine(),
@@ -175,9 +175,9 @@ class _SideBarState extends State<SideBar>
                       icon: Icons.settings,
                       title: "Configure",
                       onTap: () {
-                        onIconPressed();
-                        BlocProvider.of<NavigationBloc>(context)
-                            .add(NavigationEvents.clientesScreenClickedEvent);
+                        // onIconPressed();
+                        // BlocProvider.of<NavigationBloc>(context)
+                        //     .add(NavigationEvents.clientesScreenClickedEvent);
                       },
                     ),
                     Expanded(
