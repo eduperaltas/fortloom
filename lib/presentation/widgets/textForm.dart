@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class txtForm extends StatefulWidget {
   final String? title;
-  final String placeholder;
+  final String? placeholder;
   final InputType inputType;
   final TextEditingController controller;
   final String? errorMessage;
