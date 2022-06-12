@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fortloom/domain/entities/ForumResource.dart';
 import 'package:fortloom/domain/entities/PersonResource.dart';
 
+import '../../../core/service/AuthService.dart';
 import '../../../core/service/ForumCommentService.dart';
 import '../../../domain/entities/ForumCommentResource.dart';
 import '../../widgets/screenBase.dart';
@@ -23,11 +24,15 @@ class _ForumPageState extends State<ForumPage> {
 
    late ForumResource forumResourceo;
    ForumCommentService forumCommentService = new ForumCommentService();
-  _ForumPageState(ForumResource forumResourcejj){
+   AuthService authService= new AuthService();
+   String username="Usuario";
+   _ForumPageState(ForumResource forumResourcejj){
     PersonResource personResource= new PersonResource(0, "username", "realname", "lastname", "email", "password");
      forumResourceo = new ForumResource(0, "forumname", "forumdescription", personResource);
     forumResourceo=forumResourcejj;
   }
+   PersonResource personResource= new PersonResource(0, "username", "realname", "lastname", "email", "password");
+
    final TextEditingController createcomment = new TextEditingController();
    Future<List<ForumCommentResource>> getdata(int id){
 
@@ -38,6 +43,50 @@ class _ForumPageState extends State<ForumPage> {
 
      super.initState();
      this.getdata(forumResourceo.id);
+
+     String tep;
+
+
+
+     this.authService.getToken().then((result){
+
+       setState(() {
+         tep= result.toString();
+         username=this.authService.GetUsername(tep);
+
+         this.authService.getperson(username).then((result) {
+
+           setState(() {
+             personResource=result;
+           });
+
+         });
+
+
+
+       });
+
+
+     }) ;
+
+   }
+
+   void AddForumComment(){
+
+     forumCommentService.addForumComment(createcomment.text.trim(), this.forumResourceo.id,this.personResource.id).then((result){
+
+
+       setState(() {
+         createcomment.text="";
+         this.getdata(forumResourceo.id);
+       });
+
+
+
+     });
+
+
+
 
    }
 
@@ -140,11 +189,7 @@ class _ForumPageState extends State<ForumPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             FloatingActionButton(onPressed:(){
-                              forumCommentService.addForumComment(createcomment.text.trim(), this.forumResourceo.id);
-                                    setState(() {
-                                      createcomment.text="";
-                                      this.getdata(forumResourceo.id);
-                                    });
+                              AddForumComment();
                             },
                               shape: RoundedRectangleBorder(),
                               child: Text("Accept"),

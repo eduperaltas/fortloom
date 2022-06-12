@@ -35,13 +35,13 @@ Future<List<ForumCommentResource>> getbyForumID(int id) async
   return comments;
 }
 
-Future<http.Response> addForumComment(String commentdescription,int id) async{
+Future<http.Response> addForumComment(String commentdescription,int id,int personid) async{
   Map data ={
     'commentdescription': '$commentdescription',
 
   };
   var body = json.encode(data);
-  final response = await http.post(Uri.parse("http://192.168.0.201:8080/api/v1/users/1/forums/"+id.toString()+"/forumcomments"),
+  final response = await http.post(Uri.parse("http://192.168.0.201:8080/api/v1/users/"+personid.toString()+"/forums/"+id.toString()+"/forumcomments"),
       headers: {"Content-Type": "application/json"}, body: body
   );
   log.i(response.body);
