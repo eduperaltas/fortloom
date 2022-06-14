@@ -2,7 +2,7 @@ import 'package:fortloom/core/framework/globals.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
 import 'package:flutter/material.dart';
-import 'package:fortloom/domain/entities/event.dart';
+import 'package:fortloom/domain/entities/EventResource.dart';
 import 'package:fortloom/presentation/views/event/eventlistview.dart';
 
 class EventMainView extends StatefulWidget with NavigationStates{

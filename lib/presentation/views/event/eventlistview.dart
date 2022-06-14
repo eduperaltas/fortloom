@@ -2,7 +2,7 @@ import 'package:fortloom/core/framework/globals.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
 import 'package:flutter/material.dart';
-import 'package:fortloom/domain/entities/event.dart';
+import 'package:fortloom/domain/entities/EventResource.dart';
 
 class EventListView extends StatefulWidget {
   const EventListView({Key? key}) : super(key: key);
@@ -12,11 +12,11 @@ class EventListView extends StatefulWidget {
 }
 
 class _EventListViewState extends State<EventListView> {
-  List<Event> events = [
-    Event(eventName: 'Event 1',eventDescription: 'a description 1',date: '30/05/2022',artist: 'Artist 1',likes: 0),
-    Event(eventName: 'Event 2',eventDescription: 'a description 2',date: '31/05/2022',artist: 'Artist 2',likes: 5),
-    Event(eventName: 'Event 3',eventDescription: 'a description 3',date: '25/05/2022',artist: 'Artist 3',likes: 2),
-    Event(eventName: 'Event 4',eventDescription: 'a description 4',date: '20/05/2022',artist: 'Artist 4',likes: 3)
+  List<EventResource> events = [
+    EventResource(eventName: 'Event 1',eventDescription: 'a description 1',date: '30/05/2022',artist: 'Artist 1',likes: 0),
+    EventResource(eventName: 'Event 2',eventDescription: 'a description 2',date: '31/05/2022',artist: 'Artist 2',likes: 5),
+    EventResource(eventName: 'Event 3',eventDescription: 'a description 3',date: '25/05/2022',artist: 'Artist 3',likes: 2),
+    EventResource(eventName: 'Event 4',eventDescription: 'a description 4',date: '20/05/2022',artist: 'Artist 4',likes: 3)
   ];
 
   @override
