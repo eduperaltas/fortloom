@@ -6,11 +6,11 @@ import 'package:logger/logger.dart';
 import 'dart:convert';
 class ForumService {
 
-  var baseUrl="http://192.168.0.201:8080/api/v1/forums";
+  var baseUrl="http://192.168.1.28:8080/api/v1/forums";
   var log=Logger();
   Future<List<ForumResource>> getall() async
   {
-      final response = await http.get(Uri.parse("http://192.168.0.201:8080/api/v1/forums"));
+      final response = await http.get(Uri.parse("http://192.168.1.28:8080/api/v1/forums"));
       List<ForumResource>forums=[];
       log.i(response.body);
       log.i(response.statusCode);
@@ -35,7 +35,7 @@ class ForumService {
          'forumdescription': '$description',
        };
        var body = json.encode(data);
-       final response = await http.post(Uri.parse("http://192.168.0.201:8080/api/v1/user/"+userID.toString()+"/forums"),
+       final response = await http.post(Uri.parse("http://192.168.1.28:8080/api/v1/user/"+userID.toString()+"/forums"),
            headers: {"Content-Type": "application/json"}, body: body
        );
        log.i(response.body);

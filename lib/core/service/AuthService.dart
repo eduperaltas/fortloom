@@ -18,7 +18,7 @@ class AuthService{
        'password':  '$password'
     };
     var body = json.encode(data);
-    final response = await http.post(Uri.parse("http://192.168.0.201:8080/auth/login"),
+    final response = await http.post(Uri.parse("http://192.168.1.28:8080/auth/login"),
         headers: {"Content-Type": "application/json"}, body: body
     );
     log.i(response.body);
@@ -37,7 +37,7 @@ class AuthService{
   }
   Future<PersonResource>getperson(String getUsername) async{
 
-    final response = await http.get(Uri.parse("http://192.168.0.201:8080/api/v1/users/Username/"+getUsername));
+    final response = await http.get(Uri.parse("http://192.168.1.28:8080/api/v1/users/Username/"+getUsername));
     log.i(response.body);
     log.i(response.statusCode);
     String body = utf8.decode(response.bodyBytes);

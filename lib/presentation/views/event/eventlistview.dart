@@ -1,4 +1,5 @@
 import 'package:fortloom/core/framework/globals.dart';
+import 'package:fortloom/domain/entities/ArtistResource.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,13 @@ class EventListView extends StatefulWidget {
 }
 
 class _EventListViewState extends State<EventListView> {
+  /*ArtistResource artisttest = ArtistResource(0, "username", "realname", "lastname", "email", "password", "content", 0, "instagramLink", "facebookLink", "twitterLink");
   List<EventResource> events = [
-    EventResource(eventName: 'Event 1',eventDescription: 'a description 1',date: '30/05/2022',artist: 'Artist 1',likes: 0),
+    EventResource(1,'Event 1','a description 1', 0, '30/05/2022',),
     EventResource(eventName: 'Event 2',eventDescription: 'a description 2',date: '31/05/2022',artist: 'Artist 2',likes: 5),
     EventResource(eventName: 'Event 3',eventDescription: 'a description 3',date: '25/05/2022',artist: 'Artist 3',likes: 2),
     EventResource(eventName: 'Event 4',eventDescription: 'a description 4',date: '20/05/2022',artist: 'Artist 4',likes: 3)
-  ];
+  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class _EventListViewState extends State<EventListView> {
 
   Widget ShowListEvents(){
     return ListView.builder(
-        itemCount: events.length,
+        itemCount: 2, //events.length
         itemBuilder: (BuildContext context,int index){
           return Padding(
               padding: EdgeInsets.all(10),
@@ -36,39 +38,39 @@ class _EventListViewState extends State<EventListView> {
                   child: ListTile(
                     title: Row(
                         children: <Widget>[
-                          Text(events[index].artist),
+                          Text("events[index].artist"),
                           SizedBox(width: 70,),
-                          Text(events[index].eventName)
+                          Text("events[index].eventName")
                         ],
                     ),
                     subtitle: Column(
                         children: <Widget>[
                           SizedBox(height: 10,),
-                          Text(events[index].eventDescription),
+                          Text("events[index].eventDescription"),
                           SizedBox(height: 10,),
                           Row(
                             children: <Widget>[
-                              Text(events[index].date),
+                              Text("events[index].date"),
                               IconButton(
                                   onPressed: (){
                                     setState(() {
-                                      events[index].likes += 1;
+                                      //events[index].likes += 1;
                                     });
-                                    print('event ${index} number of likes: ${events[index].likes}');
+                                    print('event 0 number of likes: '); //${index}  and   ${events[index].likes}
                                   },
                                   icon: Icon(Icons.thumb_up)
                               ),
                               IconButton(
                                   onPressed: (){
                                     setState(() {
-                                      events[index].likes -= 1;
+                                      //events[index].likes -= 1;
                                     });
-                                    print('event ${index} number of likes: ${events[index].likes}');
+                                    print('event 0 number of likes: '); //${index} and ${events[index].likes}
                                   },
                                   icon: Icon(Icons.thumb_down)
                               ),
                               SizedBox(width: 20,),
-                              Text('${events[index].likes}'),
+                              Text('{events[index].likes}'),
                             ],
                           )
                         ],

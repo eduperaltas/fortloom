@@ -7,7 +7,7 @@ import 'dart:convert';
 
 class EventService{
 
-  var baseUrl = "http://localhost:8080/api/v1";
+  var baseUrl = "http://192.168.1.28:8080/api/v1";
   var log = Logger();
 
   Future<List<EventResource>> getallEvents() async{
