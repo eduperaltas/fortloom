@@ -1,4 +1,5 @@
 import 'package:fortloom/core/framework/globals.dart';
+import 'package:fortloom/core/service/EventService.dart';
 import 'package:fortloom/domain/entities/ArtistResource.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
@@ -20,6 +21,13 @@ class _EventListViewState extends State<EventListView> {
     EventResource(eventName: 'Event 3',eventDescription: 'a description 3',date: '25/05/2022',artist: 'Artist 3',likes: 2),
     EventResource(eventName: 'Event 4',eventDescription: 'a description 4',date: '20/05/2022',artist: 'Artist 4',likes: 3)
   ];*/
+
+  EventService eventservice = EventService();
+
+
+  Future<List<EventResource>> getData(){
+    return eventservice.getallEvents();
+  }
 
   @override
   Widget build(BuildContext context) {
