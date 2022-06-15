@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:fortloom/core/framework/globals.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fortloom/domain/entities/EventResource.dart';
 import 'package:fortloom/presentation/views/event/eventlistview.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/service/AuthService.dart';
 import '../../../core/service/EventService.dart';
@@ -26,6 +29,10 @@ class _EventState extends State<EventMainView> {
   var nametextfield = TextEditingController();
   var descriptiontextfield = TextEditingController();
   var datetextfield = TextEditingController();
+  String fechastring = "fecha";
+  DateTime fechadescription = DateTime(2022,06,15);
+  DateTime fechapredefinida = DateTime.now();
+  DateTime fechaevento = DateTime(2022,01,01);
 
   @override
   Widget build(BuildContext context) {
@@ -126,25 +133,31 @@ class _EventState extends State<EventMainView> {
                   ),
                 ),
                 SizedBox(height: 10,),
-                /*IconButton(
-                    onPressed: (){
+                IconButton(
+                    onPressed: () async{
                         DateTime? newDate = await showDatePicker(
                             context: context,
                             firstDate: DateTime(1900),
-                            lastDate: lastDate
-                        ),
+                            lastDate: DateTime(2100),
+                            initialDate: fechapredefinida
+                        );
 
+                        if(newDate == null) return;
+                        setState(() {
+                          fechadescription = newDate;
+                          print(fechadescription);
+                        });
                       },
                     icon: Icon(Icons.calendar_month)
-                ),*/
-                TextField(
+                ),
+                /*TextField(
                   controller: datetextfield,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(10),
                     hintText: 'Date',
                   ),
 
-                ),
+                ),*/
                 SizedBox(height: 10,),
                 Row(
                   children: <Widget>[
@@ -172,7 +185,14 @@ class _EventState extends State<EventMainView> {
                     SizedBox(width: 10,),
                     RaisedButton(
                         onPressed: (){
-                          eventService.addEvents(nametextfield.text.trim(), descriptiontextfield.text.trim(), 0, "2022-06-14T07:22:15.126Z", personResource.id);
+                          print("Fecha a utilizar: $fechadescription");
+                          final formattedEventDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(fechadescription);
+                          print("Formato de la fecha: $formattedEventDate");
+                          fechaevento = DateTime.parse(formattedEventDate); //parse me ayuda para convertir un string a Datetime
+                          print("Nueva Fecha convertida: $fechaevento");
+                          /*fechadescription = DateTime.parse("$fechastring" + "T"+"$formattedActualTime");
+                          print(fechadescription);*/
+                          eventService.addEvents(nametextfield.text.trim(), descriptiontextfield.text.trim(), 0, fechaevento, personResource.id);
                         },
                         child:Text("Create and Post"),
                         color:Colors.white

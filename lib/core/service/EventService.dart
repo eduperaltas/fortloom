@@ -31,7 +31,7 @@ class EventService{
     return events;
   }
 
-  Future<http.Response> addEvents(String eventName, String eventDescription, int eventLikes, String registerDate, int ArtistId) async {
+  Future<http.Response> addEvents(String eventName, String eventDescription, int eventLikes, DateTime registerDate, int ArtistId) async {
     Map data ={
       'eventname': '$eventName',
       'eventeescription': '$eventDescription',
