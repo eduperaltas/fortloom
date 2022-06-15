@@ -150,14 +150,6 @@ class _EventState extends State<EventMainView> {
                       },
                     icon: Icon(Icons.calendar_month)
                 ),
-                /*TextField(
-                  controller: datetextfield,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10),
-                    hintText: 'Date',
-                  ),
-
-                ),*/
                 SizedBox(height: 10,),
                 Row(
                   children: <Widget>[
@@ -190,8 +182,6 @@ class _EventState extends State<EventMainView> {
                           print("Formato de la fecha: $formattedEventDate");
                           fechaevento = DateTime.parse(formattedEventDate); //parse me ayuda para convertir un string a Datetime
                           print("Nueva Fecha convertida: $fechaevento");
-                          /*fechadescription = DateTime.parse("$fechastring" + "T"+"$formattedActualTime");
-                          print(fechadescription);*/
                           eventService.addEvents(nametextfield.text.trim(), descriptiontextfield.text.trim(), 0, fechaevento, personResource.id);
                         },
                         child:Text("Create and Post"),
