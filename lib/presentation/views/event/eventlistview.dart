@@ -1,6 +1,7 @@
 import 'package:fortloom/core/framework/globals.dart';
 import 'package:fortloom/core/service/EventService.dart';
 import 'package:fortloom/domain/entities/ArtistResource.dart';
+import 'package:fortloom/presentation/views/Forum/ForumSection.Dart.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
 import 'package:flutter/material.dart';
@@ -14,83 +15,126 @@ class EventListView extends StatefulWidget {
 }
 
 class _EventListViewState extends State<EventListView> {
-  /*ArtistResource artisttest = ArtistResource(0, "username", "realname", "lastname", "email", "password", "content", 0, "instagramLink", "facebookLink", "twitterLink");
-  List<EventResource> events = [
-    EventResource(1,'Event 1','a description 1', 0, '30/05/2022',),
-    EventResource(eventName: 'Event 2',eventDescription: 'a description 2',date: '31/05/2022',artist: 'Artist 2',likes: 5),
-    EventResource(eventName: 'Event 3',eventDescription: 'a description 3',date: '25/05/2022',artist: 'Artist 3',likes: 2),
-    EventResource(eventName: 'Event 4',eventDescription: 'a description 4',date: '20/05/2022',artist: 'Artist 4',likes: 3)
-  ];*/
 
   EventService eventservice = EventService();
+  List<EventResource> eventlist = [];
 
-
-  Future<List<EventResource>> getData(){
+  Future<List<EventResource>> getdata(){
     return eventservice.getallEvents();
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
+    this.getdata();
+
   }
 
   @override
   Widget build(BuildContext context) {
     return ScreenBase(
-      body: ShowListEvents(),
-    );
+        body: SingleChildScrollView(
+          child:Column(
+            children: <Widget>[
+              Container(
+                  height: 600,
+                  child: FutureBuilder<List<EventResource>>(
+                    future: getdata(),
+                    builder: (context, snapshot) {
+                      print(snapshot);
+                      if (snapshot.hasError) print("Este es el error: ${snapshot.error}");
+                      if(snapshot.hasData){
+                        print(snapshot.data);
+                        return EventsList(list: snapshot.data!);
+                      }
+                      return Text(" ");
+                    },
+                  )
+              )
+            ],
+          ),
+        )
+      );
   }
+}
 
-  Widget ShowListEvents(){
+class EventsList extends StatefulWidget {
+  final List<EventResource>? list;
+
+  EventsList({Key? key, required this.list,}) : super(key: key);
+
+  @override
+  State<EventsList> createState() => _EventsListState();
+}
+
+class _EventsListState extends State<EventsList> {
+
+  var seteventlikes = 0;
+
+  @override
+  Widget build(BuildContext context) {
+
     return ListView.builder(
-        itemCount: 2, //events.length
-        itemBuilder: (BuildContext context,int index){
-          return Padding(
-              padding: EdgeInsets.all(10),
-              child: Card(
-                  child: ListTile(
-                    title: Row(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: widget.list == null ? 0: widget.list?.length, //events.length
+          itemBuilder: (BuildContext context,int index){
+            return Padding(
+                padding: EdgeInsets.all(10),
+                child: Card(
+                    child: ListTile(
+                      title: Row(
                         children: <Widget>[
-                          Text("events[index].artist"),
+                          Text(widget.list![index].artist.realname),
+                          SizedBox(width: 10,),
+                          Text(widget.list![index].artist.lastname),
                           SizedBox(width: 70,),
-                          Text("events[index].eventName")
+                          Text(widget.list![index].eventname)
                         ],
-                    ),
-                    subtitle: Column(
+                      ),
+                      subtitle: Column(
                         children: <Widget>[
                           SizedBox(height: 10,),
-                          Text("events[index].eventDescription"),
+                          Text(widget.list![index].eventeescription),
                           SizedBox(height: 10,),
                           Row(
                             children: <Widget>[
-                              Text("events[index].date"),
+                              //Text(widget.list![index].registerdate),
                               IconButton(
                                   onPressed: (){
                                     setState(() {
-                                      //events[index].likes += 1;
+                                      widget.list![index].eventlikes  += 1;
                                     });
-                                    print('event 0 number of likes: '); //${index}  and   ${events[index].likes}
+                                    print('event $index number of likes: '+ widget.list![index].eventlikes.toString()); //${index}  and   ${events[index].likes}
                                   },
                                   icon: Icon(Icons.thumb_up)
                               ),
                               IconButton(
                                   onPressed: (){
                                     setState(() {
-                                      //events[index].likes -= 1;
+                                      widget.list![index].eventlikes -= 1;
                                     });
-                                    print('event 0 number of likes: '); //${index} and ${events[index].likes}
+                                    print('event $index number of likes: ' + widget.list![index].eventlikes.toString()); //${index} and ${events[index].likes}
                                   },
                                   icon: Icon(Icons.thumb_down)
                               ),
                               SizedBox(width: 20,),
-                              Text('{events[index].likes}'),
+                              Text(widget.list![index].eventlikes.toString()),
                             ],
                           )
                         ],
-                    ),
-                    isThreeLine: true,
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage('assets/imgs/avatar_example.png'),
-                    ),
-                  )
-              )
-          );
-        }
-    );
-  }
+                      ),
+                      isThreeLine: true,
+                      leading: CircleAvatar(
+                        backgroundImage: AssetImage('assets/imgs/avatar_example.png'),
+                      ),
+                    )
+                )
+            );
+          }
+      );
+    }
 }
+
+

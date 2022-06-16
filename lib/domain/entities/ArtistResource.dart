@@ -13,15 +13,15 @@ class ArtistResource{
 
   final String password;
 
-  final String content;
+  final String? content;
 
   final int artistfollowers;
 
-  final String instagramLink;
+  final String? instagramLink;
 
-  final String facebookLink;
+  final String? facebookLink;
 
-  final String twitterLink;
+  final String? twitterLink;
 
   ArtistResource(this.id,this.username,this.realname,this.lastname,this.email,this.password,this.content,
                  this.artistfollowers,this.instagramLink,this.facebookLink,this.twitterLink);

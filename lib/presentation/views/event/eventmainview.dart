@@ -32,7 +32,6 @@ class _EventState extends State<EventMainView> {
   String fechastring = "fecha";
   DateTime fechadescription = DateTime(2022,06,15);
   DateTime fechapredefinida = DateTime.now();
-  DateTime fechaevento = DateTime(2022,01,01);
 
   @override
   Widget build(BuildContext context) {
@@ -178,9 +177,7 @@ class _EventState extends State<EventMainView> {
                     RaisedButton(
                         onPressed: (){
                           print("Fecha a utilizar: $fechadescription");
-                          final formattedEventDate = DateFormat('yyyy-MM-ddTHH:mm:ss').format(fechadescription);
-                          print("Formato de la fecha: $formattedEventDate");
-                          fechaevento = DateTime.parse(formattedEventDate); //parse me ayuda para convertir un string a Datetime
+                          String fechaevento = DateFormat('yyyy-MM-ddTHH:mm:ss').format(fechadescription); //parse me ayuda para convertir un string a Datetime y format de datetime a string
                           print("Nueva Fecha convertida: $fechaevento");
                           eventService.addEvents(nametextfield.text.trim(), descriptiontextfield.text.trim(), 0, fechaevento, personResource.id);
                         },

@@ -21,17 +21,19 @@ class EventService{
       ArtistResource artistResource= new ArtistResource(item["artist"]["id"],item["artist"]["username"] ,item["artist"]["realname"] ,item["artist"]["lastname"] ,
           item["artist"]["email"], item["artist"]["password"],item["artist"]["content"], item["artist"]["artistfollowers"], item["artist"]["instagramLink"],
           item["artist"]["facebookLink"], item["artist"]["twitterLink"]);
+
+      print(artistResource);
+
       EventResource eventResource = new EventResource(item["id"],item["eventname"],item["eventeescription"] , item["eventlikes"],item["registerdate"], artistResource);
 
 
       events.add(eventResource);
-
     }
-
+    print(events);
     return events;
   }
 
-  Future<http.Response> addEvents(String eventName, String eventDescription, int eventLikes, DateTime registerDate, int ArtistId) async {
+  Future<http.Response> addEvents(String eventName, String eventDescription, int eventLikes, String registerDate, int ArtistId) async {
     Map data ={
       'eventname': '$eventName',
       'eventeescription': '$eventDescription',
