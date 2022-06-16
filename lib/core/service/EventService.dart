@@ -50,6 +50,22 @@ class EventService{
     return response;
   }
 
+  Future<http.Response> updateEvents(int eventLikes,int EventId) async{
+    Map data ={
+      'eventlikes': '$eventLikes'
+    };
+
+    var body = json.encode(data);
+    final response = await http.put(Uri.parse(baseUrl + "/event/"+EventId.toString()),
+        headers: {"Content-Type": "application/json"}, body: body);
+
+    log.i(response.body);
+    log.i(response.statusCode);
+
+    return response;
+
+  }
+
 
 }
 

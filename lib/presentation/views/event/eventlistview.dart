@@ -71,6 +71,7 @@ class EventsList extends StatefulWidget {
 class _EventsListState extends State<EventsList> {
 
   var seteventlikes = 0;
+  EventService eventservice = EventService();
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +107,7 @@ class _EventsListState extends State<EventsList> {
                                     setState(() {
                                       widget.list![index].eventlikes  += 1;
                                     });
+                                    eventservice.updateEvents(widget.list![index].eventlikes, widget.list![index].id);
                                     print('event $index number of likes: '+ widget.list![index].eventlikes.toString()); //${index}  and   ${events[index].likes}
                                   },
                                   icon: Icon(Icons.thumb_up)
@@ -115,6 +117,7 @@ class _EventsListState extends State<EventsList> {
                                     setState(() {
                                       widget.list![index].eventlikes -= 1;
                                     });
+                                    eventservice.updateEvents(widget.list![index].eventlikes, widget.list![index].id);
                                     print('event $index number of likes: ' + widget.list![index].eventlikes.toString()); //${index} and ${events[index].likes}
                                   },
                                   icon: Icon(Icons.thumb_down)
