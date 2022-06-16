@@ -6,8 +6,9 @@ import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
 
 import '../../../core/framework/globals.dart';
-
-
+import 'package:fortloom/core/service/ProfileService.dart';
+import 'package:fortloom/core/service/AuthService.dart';
+import 'package:fortloom/domain/entities/PersonResource.dart';
 
 class EditProfilePage extends StatefulWidget with NavigationStates{
   @override
@@ -15,7 +16,47 @@ class EditProfilePage extends StatefulWidget with NavigationStates{
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  bool showPassword = false;
+  bool showPassword = true;
+  ProfileService profileService=new ProfileService();
+  AuthService authService= new AuthService();
+  final TextEditingController realnameController = new TextEditingController();
+  final TextEditingController lastnameController = new TextEditingController();
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController newpasswordController = new TextEditingController();
+  String username="Usuario";
+  PersonResource personResource= new PersonResource(0, "username", "realname", "lastname", "email", "password");
+
+  @override
+  void initState() {
+
+    super.initState();
+    String tep;
+
+    this.authService.getToken().then((result){
+
+      setState(() {
+        tep= result.toString();
+        username=this.authService.GetUsername(tep);
+
+        this.authService.getperson(username).then((result) {
+
+          setState(() {
+            personResource=result;
+            newpasswordController.text=personResource.password;
+          });
+
+        });
+
+      });
+
+    }) ;
+
+  }
+
+
+
+
+
   @override
   Widget build(BuildContext context){
     return ScreenBase(
@@ -125,10 +166,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         SizedBox(
                           height: 35,
                         ),
-                        buildTextField("Full Name", "Sinéad O'Connor", false),
-                        buildTextField("E-mail", "thecranberries@gmail.com",false),
-                        buildTextField("Password", "********", true),
-                        buildTextField(" New Password", "********", true),
+                        buildTextField("Full Name",personResource.realname,realnameController,false),
+                        buildTextField("Full Name",personResource.lastname,lastnameController,false),
+                        buildTextField("E-mail", personResource.email,emailController,false),
+                        buildTextField(" New Password", "", newpasswordController, true),
                         SizedBox(
                           height: 35,
                         ),
@@ -141,7 +182,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20))
                               ),
-                              onPressed: (){},
+                              onPressed: (){
+                                realnameController.text=personResource.realname;
+                               lastnameController.text=personResource.lastname;
+                                emailController.text=personResource.email;
+                               newpasswordController.text=personResource.password;
+                              },
                                 child: Text("Cancel",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -149,7 +195,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     color: Colors.black)),
                             ),
                             ElevatedButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  if(realnameController.text==''){
+                                    realnameController.text=personResource.realname;
+                                  }
+                                  if(lastnameController.text==''){
+                                    lastnameController.text=personResource.lastname;
+                                  }
+                                  if(emailController.text==''){
+                                   emailController.text=personResource.email;
+                                  }
+                                 profileService.editProfile(personResource.id, realnameController.text.trim(), lastnameController.text.trim(), emailController.text.trim(), newpasswordController.text.trim());
+                                },
                               style:
                               ElevatedButton.styleFrom(
                                 primary: Colors.black,
@@ -179,10 +236,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder, bool isPasswordTextField) {
+  Widget buildTextField(String labelText, String placeholder, TextEditingController controller, bool isPasswordTextField) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
+                controller: controller,
                 obscureText: isPasswordTextField ? showPassword : false,
                 decoration: InputDecoration(
                   suffixIcon: isPasswordTextField ? IconButton(
@@ -209,6 +267,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
     );
   }
+
 
   Widget buildChip(String text) {
     return Padding(

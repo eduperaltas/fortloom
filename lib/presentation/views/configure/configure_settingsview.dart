@@ -4,6 +4,8 @@ import 'package:fortloom/presentation/views/login_register/login.dart';
 
 import '../../../core/framework/globals.dart';
 
+
+
 class SettingsPage extends StatefulWidget {
   @override
   State<SettingsPage> createState() => _SettingsPageState();
