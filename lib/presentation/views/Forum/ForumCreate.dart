@@ -58,7 +58,25 @@ class _ForumCreateState extends State<ForumCreate> {
 
   }
 
+  void AddForum(){
 
+
+    forumService.addForum(nameController.text.trim(), DescriptionController.text.trim(),personResource.id).then((result){
+
+
+      setState(() {
+
+        Navigator.pop(context, true);
+
+      });
+
+
+    });
+
+
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,9 +142,7 @@ class _ForumCreateState extends State<ForumCreate> {
                 alignment: Alignment.bottomRight,
                 child:FloatingActionButton(onPressed:(){
                   heroTag: "heroTag";
-                  forumService.addForum(nameController.text.trim(), DescriptionController.text.trim(),personResource.id);
-
-                  Navigator.pop(context, true);
+                  AddForum();
                 },
                   shape: RoundedRectangleBorder(),
                   child: Text("Create"),

@@ -1,9 +1,14 @@
 
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fortloom/core/service/ReportService.dart';
 import 'package:fortloom/domain/entities/ForumResource.dart';
 import 'package:fortloom/domain/entities/PersonResource.dart';
 
+import '../../../core/service/AuthService.dart';
 import '../../../core/service/ForumCommentService.dart';
 import '../../../domain/entities/ForumCommentResource.dart';
 import '../../widgets/screenBase.dart';
@@ -23,12 +28,18 @@ class _ForumPageState extends State<ForumPage> {
 
    late ForumResource forumResourceo;
    ForumCommentService forumCommentService = new ForumCommentService();
-  _ForumPageState(ForumResource forumResourcejj){
+   AuthService authService= new AuthService();
+   ReportService reportService=new ReportService();
+   String username="Usuario";
+   _ForumPageState(ForumResource forumResourcejj){
     PersonResource personResource= new PersonResource(0, "username", "realname", "lastname", "email", "password");
      forumResourceo = new ForumResource(0, "forumname", "forumdescription", personResource);
     forumResourceo=forumResourcejj;
   }
+   PersonResource personResource= new PersonResource(0, "username", "realname", "lastname", "email", "password");
+
    final TextEditingController createcomment = new TextEditingController();
+   final TextEditingController report = new TextEditingController();
    Future<List<ForumCommentResource>> getdata(int id){
 
      return forumCommentService.getbyForumID(id);
@@ -39,7 +50,65 @@ class _ForumPageState extends State<ForumPage> {
      super.initState();
      this.getdata(forumResourceo.id);
 
+     String tep;
+
+
+
+     this.authService.getToken().then((result){
+
+       setState(() {
+         tep= result.toString();
+         username=this.authService.GetUsername(tep);
+
+         this.authService.getperson(username).then((result) {
+
+           setState(() {
+             personResource=result;
+           });
+
+         });
+
+
+
+       });
+
+
+     }) ;
+
    }
+
+   void AddForumComment(){
+
+     forumCommentService.addForumComment(createcomment.text.trim(), this.forumResourceo.id,this.personResource.id).then((result){
+
+
+       setState(() {
+         createcomment.text="";
+         this.getdata(forumResourceo.id);
+       });
+
+
+
+     });
+
+
+
+
+   }
+   
+   Future<int> AddReport(){
+     var result=reportService.createreport(report.text.trim(), personResource.id, forumResourceo.person.id);
+
+     return result;
+     
+   }
+
+   
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +136,62 @@ class _ForumPageState extends State<ForumPage> {
 
                         child:IconButton(
                             icon: const Icon(Icons.flag),
-                            onPressed: () {}
+                            onPressed: () {
+                              showDialog(context: context,
+                                  barrierDismissible: false,
+                                  builder: (context)=> AlertDialog(
+
+                                    title: Text("Reporte al Foro"),
+                                    content: Container(
+                                      width: 200,
+                                      child: TextField(
+                                        keyboardType: TextInputType.multiline,
+                                        minLines: 1,
+                                        maxLines: 20,
+                                        maxLength: 100,
+                                        controller: report,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          hintText: 'Description',
+
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                        FloatingActionButton(
+                                             child:Text("Ok"),
+                                             onPressed: (){
+
+                                                  AddReport();
+
+                                                 Fluttertoast.showToast(
+                                                     msg: "Reporte Enviado",
+                                                     toastLength: Toast.LENGTH_SHORT,
+                                                     gravity: ToastGravity.CENTER,
+                                                     textColor: Colors.white,
+                                                     fontSize: 16.0
+
+                                                 );
+
+
+
+
+                                             Navigator.of(context).pop();
+                                             },),
+
+
+                                      FloatingActionButton(
+                                      child:Text("Cancel"),
+                                      onPressed: (){
+                                      Navigator.of(context).pop();
+                                       },
+                                       )
+                                    ],
+
+                                  )
+
+                                  );
+                            }
                         ),
                       ),
                       ) ,
@@ -100,7 +224,7 @@ class _ForumPageState extends State<ForumPage> {
                   if(snapshot.hasData){
 
 
-                    return itemList(list: snapshot.data,);
+                    return itemList(list: snapshot.data,report: this.report,personResource: this.personResource,);
 
                   }
                   return Text("Correct");
@@ -140,11 +264,7 @@ class _ForumPageState extends State<ForumPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             FloatingActionButton(onPressed:(){
-                              forumCommentService.addForumComment(createcomment.text.trim(), this.forumResourceo.id);
-                                    setState(() {
-                                      createcomment.text="";
-                                      this.getdata(forumResourceo.id);
-                                    });
+                              AddForumComment();
                             },
                               shape: RoundedRectangleBorder(),
                               child: Text("Accept"),
@@ -172,10 +292,35 @@ class _ForumPageState extends State<ForumPage> {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 class itemList extends StatelessWidget {
   final List<ForumCommentResource>? list;
-  const itemList({Key? key,required this.list}) : super(key: key);
+  final TextEditingController report;
+  final PersonResource personResource;
+  const itemList({Key? key,required this.list,required this.report,required this.personResource}) : super(key: key);
 
+
+
+  Future<int> AddReportincomment(int id){
+
+    ReportService reportService=new ReportService();
+    var result=reportService.createreport(report.text.trim(), personResource.id, id);
+
+    return result;
+
+  }
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -205,7 +350,66 @@ class itemList extends StatelessWidget {
 
                           child:IconButton(
                               icon: const Icon(Icons.flag),
-                              onPressed: () {}
+                              onPressed: () {
+
+                                showDialog(context: context,
+                                    barrierDismissible: false,
+                                    builder: (context)=> AlertDialog(
+
+                                      title: Text("Reporte al Foro"),
+                                      content: Container(
+                                        width: 200,
+                                        child: TextField(
+                                          keyboardType: TextInputType.multiline,
+                                          minLines: 1,
+                                          maxLines: 20,
+                                          maxLength: 100,
+                                          controller: report,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            hintText: 'Description',
+
+                                          ),
+                                        ),
+                                      ),
+                                      actions: [
+                                        FloatingActionButton(
+                                          child:Text("Ok"),
+                                          onPressed: (){
+
+                                            AddReportincomment(list![index].person.id);
+
+                                            Fluttertoast.showToast(
+                                                msg: "Reporte Enviado",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.CENTER,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0
+
+                                            );
+
+
+
+
+                                            Navigator.of(context).pop();
+                                          },),
+
+
+                                        FloatingActionButton(
+                                          child:Text("Cancel"),
+                                          onPressed: (){
+                                            Navigator.of(context).pop();
+                                          },
+                                        )
+                                      ],
+
+                                    )
+
+                                );
+
+
+
+                              }
                           ),
                         ),
                       ) ,
