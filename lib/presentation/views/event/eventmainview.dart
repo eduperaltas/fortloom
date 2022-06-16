@@ -36,17 +36,19 @@ class _EventState extends State<EventMainView> {
   @override
   Widget build(BuildContext context) {
     return ScreenBase(
-      body:Center(
-          child:Container(
-            child: Column(
-                children: <Widget>[
-                  SizedBox(height: 10,),
-                  CardMainEvent(),
-                  SizedBox(height: 10,),
-                  ShowForm(),
-                  SizedBox(height: 10,),
-                  ShowButtons()
-                ]
+      body:SingleChildScrollView(
+          child:Center(
+            child:Container(
+              child:Column(
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                    CardMainEvent(),
+                    SizedBox(height: 10,),
+                    ShowForm(),
+                    SizedBox(height: 10,),
+                    ShowButtons()
+                  ]
+              )
             )
           )
       )
