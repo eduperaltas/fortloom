@@ -91,7 +91,7 @@ class _PostScreenState extends State<PostScreen> {
               children: [
                 Container(
                   margin: const EdgeInsets.all(12),
-                  height: 4 * 10,
+                  height: 4 * 15,
                   child: TextField(
                     controller: _newPostTitleController,
                     maxLines: 4,
