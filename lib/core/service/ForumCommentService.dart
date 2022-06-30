@@ -14,7 +14,7 @@ var log=Logger();
 
 Future<List<ForumCommentResource>> getbyForumID(int id) async
 {
-  final response = await http.get(Uri.parse("http://192.168.0.201:8080/api/v1/forums/"+id.toString()+"/forumcomments"));
+  final response = await http.get(Uri.parse("http://192.168.1.45:8080/api/v1/forums/"+id.toString()+"/forumcomments"));
   List<ForumCommentResource>comments=[];
   log.i(response.body);
   log.i(response.statusCode);
