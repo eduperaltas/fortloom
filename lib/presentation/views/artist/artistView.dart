@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fortloom/core/service/ArtistService.dart';
@@ -120,7 +122,7 @@ class _ItemListState extends State<ItemList> {
                   ),
 
                   RatingBar(
-                    initialRating: 0,
+                    initialRating: Random(artistList![index].id*9999).nextDouble()*5,
                     direction: Axis.horizontal,
                     allowHalfRating: true,
                     itemCount: 5,
@@ -135,7 +137,7 @@ class _ItemListState extends State<ItemList> {
                           color: Colors.orange,
                         )),
                     onRatingUpdate: (double value) {
-//here goes API call for updating rating
+                      //here goes API call for updating rating
                     },
                   ),
 
