@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fortloom/core/framework/colors.dart';
 import 'package:fortloom/core/framework/globals.dart';
+import 'package:fortloom/core/service/Post.dart';
+import 'package:fortloom/domain/entities/PostResource.dart';
 import 'package:fortloom/presentation/views/posts/widgets/post.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
@@ -14,7 +16,21 @@ class PostScreen extends StatefulWidget with NavigationStates {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  final TextEditingController _newPostController = TextEditingController();
+  final TextEditingController _newPostDescripController =
+      TextEditingController();
+  final TextEditingController _newPostTitleController = TextEditingController();
+  final PostService _postService = PostService();
+  List<Post> lstPosts = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _postService.getall().then((value) {
+      setState(() {
+        lstPosts = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +44,14 @@ class _PostScreenState extends State<PostScreen> {
             height: 10,
           ),
           Expanded(
-              child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return PostWidget();
-                  }))
+            child: lstPosts.isNotEmpty
+                ? ListView.builder(
+                    itemCount: lstPosts.length,
+                    itemBuilder: (context, index) {
+                      return PostWidget(post: lstPosts[index]);
+                    })
+                : const Center(child: Text("No Posts")),
+          )
         ],
       ),
     ));
@@ -68,21 +87,41 @@ class _PostScreenState extends State<PostScreen> {
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.all(12),
-              height: 4 * 24.0,
-              child: TextField(
-                controller: _newPostController,
-                maxLines: 4,
-                decoration: InputDecoration(
-                  border: getBorder(false),
-                  enabledBorder: getBorder(false),
-                  focusedBorder: getBorder(true),
-                  hintText: "Enter a message",
-                  fillColor: Colors.white,
-                  filled: true,
+            Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(12),
+                  height: 4 * 10,
+                  child: TextField(
+                    controller: _newPostTitleController,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      border: getBorder(false),
+                      enabledBorder: getBorder(false),
+                      focusedBorder: getBorder(true),
+                      hintText: "Enter a title for your post",
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                  ),
                 ),
-              ),
+                Container(
+                  margin: const EdgeInsets.all(12),
+                  height: 4 * 18.0,
+                  child: TextField(
+                    controller: _newPostDescripController,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      border: getBorder(false),
+                      enabledBorder: getBorder(false),
+                      focusedBorder: getBorder(true),
+                      hintText: "Enter a post description",
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -100,7 +139,10 @@ class _PostScreenState extends State<PostScreen> {
                       backgroundColor: MaterialStateProperty.all(goldPrimary),
                     ),
                     onPressed: () {
-                      _newPostController.clear();
+                      _postService.addPost(_newPostTitleController.text,
+                          _newPostDescripController.text, 1);
+                      _newPostDescripController.clear();
+                      _newPostTitleController.clear();
                     },
                     child: const Text(
                       'Post',

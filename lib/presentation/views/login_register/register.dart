@@ -15,48 +15,40 @@ class Register extends StatelessWidget {
   final TextEditingController _realnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _fanaticaliasController = TextEditingController();
-  final RegisterService registerService=RegisterService();
+  final RegisterService registerService = RegisterService();
   final String typeRegister;
   Register({required this.typeRegister});
 
+  RegisteFanatic(BuildContext context) async {
+    var result = await registerService.registerFanatic(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+        _usernameController.text.trim(),
+        _realnameController.text.trim(),
+        _lastnameController.text.trim(),
+        _fanaticaliasController.text.trim());
 
-  RegisteFanatic(BuildContext context) async{
-
-
-    var result= await registerService.registerFanatic(_emailController.text.trim(), _passwordController.text.trim(),
-        _usernameController.text.trim(), _realnameController.text.trim(),
-          _lastnameController.text.trim(), _fanaticaliasController.text.trim());
-
-    if(result=="new fanatic saved"){
-      Navigator.push(
-          context,
-          PageTransition(
-              child: Login(),
-              type: PageTransitionType.rightToLeft));
+    if (result == "new fanatic saved") {
+      Navigator.push(context,
+          PageTransition(child: Login(), type: PageTransitionType.rightToLeft));
     }
   }
-  RegisterArtist(BuildContext context) async{
 
-    var result= await registerService.registerArtist(_emailController.text.trim(), _passwordController.text.trim(),
-        _usernameController.text.trim(), _realnameController.text.trim(),
+  RegisterArtist(BuildContext context) async {
+    var result = await registerService.registerArtist(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+        _usernameController.text.trim(),
+        _realnameController.text.trim(),
         _lastnameController.text.trim());
 
-    if(result=="new artist saved"){
-      Navigator.push(
-          context,
-          PageTransition(
-              child: Login(),
-              type: PageTransitionType.rightToLeft));
+    print('result: $result');
+
+    if (result == "new artist saved") {
+      Navigator.push(context,
+          PageTransition(child: Login(), type: PageTransitionType.rightToLeft));
     }
-
-
   }
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,19 +71,19 @@ class Register extends StatelessWidget {
       inputType: InputType.Default,
       txtColor: Colors.white,
     );
-    txtForm _txtFormrealname= txtForm(
+    txtForm _txtFormrealname = txtForm(
       title: 'Realname',
       controller: _realnameController,
       inputType: InputType.Default,
       txtColor: Colors.white,
     );
-    txtForm _txtFormlastname= txtForm(
+    txtForm _txtFormlastname = txtForm(
       title: 'Lastname',
       controller: _lastnameController,
       inputType: InputType.Default,
       txtColor: Colors.white,
     );
-    txtForm _txtFormFanaticAlias= txtForm(
+    txtForm _txtFormFanaticAlias = txtForm(
       title: 'FanaticAlias',
       controller: _fanaticaliasController,
       inputType: InputType.Default,
@@ -119,46 +111,31 @@ class Register extends StatelessWidget {
                 child: _txtFormpasssword),
             Container(
                 margin:
-                const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: _txtFormemail),
             Container(
                 margin:
-                const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: _txtFormrealname),
             Container(
                 margin:
-                const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: _txtFormlastname),
-            if(typeRegister=="Fanatic")
+            if (typeRegister == "Fanatic")
               Container(
                   margin:
-                  const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   child: _txtFormFanaticAlias),
-
-
-
-
             ButtonLarge(
                 text: 'Register $typeRegister',
                 onPressed: () {
-
-                  if(typeRegister=="Fanatic"){
+                  if (typeRegister == "Fanatic") {
                     RegisteFanatic(context);
                   }
-                  if(typeRegister=="Artist"){
-
+                  if (typeRegister == "Artist") {
                     RegisterArtist(context);
                   }
-
-
-
-                }
-
-            )
-
-
-
-
+                })
           ],
         ),
       ),

@@ -2,9 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:fortloom/core/framework/globals.dart';
+import 'package:fortloom/domain/entities/PostResource.dart';
 
 class PostWidget extends StatefulWidget {
-  const PostWidget({Key? key}) : super(key: key);
+  const PostWidget({Key? key, required this.post}) : super(key: key);
+  final Post post;
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -44,7 +46,7 @@ class _PostWidgetState extends State<PostWidget> {
                   "https://source.unsplash.com/random/200x200?sig=${DateTime.now().millisecondsSinceEpoch}")),
           SizedBox(width: 15),
           Text(
-            "User 1",
+            widget.post.artist.username,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           )
         ],
@@ -60,8 +62,8 @@ class _PostWidgetState extends State<PostWidget> {
           Container(
             height: 100,
             child: Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              widget.post.publicationDescription,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
             ),
