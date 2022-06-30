@@ -5,7 +5,7 @@ import 'package:logger/logger.dart';
 class ProfileService {
   Future<http.Response> editProfile(int id, String realnameController,
       String lastnameController, String emailController, String passwordController) async {
-    var baseUrl = 'http://192.168.68.115:8080/api/v1/users/changeprofile/$id';
+    var baseUrl = 'http://192.168.1.45:8080/api/v1/users/changeprofile/$id';
     var log=Logger();
 
     print(id);

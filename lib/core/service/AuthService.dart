@@ -18,7 +18,7 @@ class AuthService{
        'password':  '$password'
     };
     var body = json.encode(data);
-    final response = await http.post(Uri.parse("http://192.168.1.28:8080/auth/login"),
+    final response = await http.post(Uri.parse("http://192.168.1.45:8080/auth/login"),
         headers: {"Content-Type": "application/json"}, body: body
     );
     log.i(response.body);

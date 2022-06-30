@@ -10,7 +10,7 @@ class ForumService {
   var log=Logger();
   Future<List<ForumResource>> getall() async
   {
-      final response = await http.get(Uri.parse("http://192.168.1.28:8080/api/v1/forums"));
+      final response = await http.get(Uri.parse("http://192.168.1.45:8080/api/v1/forums"));
       List<ForumResource>forums=[];
       log.i(response.body);
       log.i(response.statusCode);

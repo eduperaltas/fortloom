@@ -13,9 +13,9 @@ class ArtistResource{
 
   final String password;
 
-  final String? content;
+  final String content;
 
-  final int artistfollowers;
+  int artistfollowers;
 
   final String? instagramLink;
 
