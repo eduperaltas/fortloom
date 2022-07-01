@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fortloom/core/framework/colors.dart';
 import 'package:fortloom/core/framework/globals.dart';
-import 'package:fortloom/core/service/Post.dart';
+import 'package:fortloom/core/service/PostService.dart';
 import 'package:fortloom/domain/entities/PostResource.dart';
 import 'package:fortloom/presentation/views/posts/widgets/post.dart';
 import 'package:fortloom/presentation/widgets/screenBase.dart';
 import 'package:fortloom/presentation/widgets/sideBar/navigationBloc.dart';
-import 'package:fortloom/presentation/widgets/textForm.dart';
 
 class PostScreen extends StatefulWidget with NavigationStates {
   const PostScreen({Key? key}) : super(key: key);
@@ -34,6 +33,15 @@ class _PostScreenState extends State<PostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _pullRefresh() async {
+      _postService.getall().then((value) {
+        setState(() {
+          lstPosts = value;
+        });
+      });
+      // why use freshWords var? https://stackoverflow.com/a/52992836/2301224
+    }
+
     return ScreenBase(
         body: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -45,11 +53,13 @@ class _PostScreenState extends State<PostScreen> {
           ),
           Expanded(
             child: lstPosts.isNotEmpty
-                ? ListView.builder(
-                    itemCount: lstPosts.length,
-                    itemBuilder: (context, index) {
-                      return PostWidget(post: lstPosts[index]);
-                    })
+                ? RefreshIndicator(
+                    child: ListView.builder(
+                        itemCount: lstPosts.length,
+                        itemBuilder: (context, index) {
+                          return PostWidget(post: lstPosts[index]);
+                        }),
+                    onRefresh: _pullRefresh)
                 : const Center(child: Text("No Posts")),
           )
         ],

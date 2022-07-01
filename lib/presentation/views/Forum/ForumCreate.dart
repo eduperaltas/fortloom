@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fortloom/core/service/AuthService.dart';
 import 'package:fortloom/core/service/ForumService.dart';
@@ -6,8 +5,6 @@ import 'package:fortloom/domain/entities/PersonResource.dart';
 import 'package:fortloom/presentation/views/Forum/ForumSection.Dart.dart';
 
 import '../../widgets/screenBase.dart';
-
-
 
 class ForumCreate extends StatefulWidget {
   const ForumCreate({Key? key}) : super(key: key);
@@ -17,65 +14,43 @@ class ForumCreate extends StatefulWidget {
 }
 
 class _ForumCreateState extends State<ForumCreate> {
-
-  ForumService forumService=new ForumService();
-  AuthService authService= new AuthService();
+  ForumService forumService = new ForumService();
+  AuthService authService = new AuthService();
   final TextEditingController nameController = new TextEditingController();
-  final TextEditingController DescriptionController = new TextEditingController();
-  String username="Usuario";
-  PersonResource personResource= new PersonResource(0, "username", "realname", "lastname", "email", "password");
+  final TextEditingController DescriptionController =
+      new TextEditingController();
+  String username = "Usuario";
+  PersonResource personResource = new PersonResource(
+      0, "username", "realname", "lastname", "email", "password");
 
   @override
   void initState() {
-
     super.initState();
     String tep;
 
-
-
-    this.authService.getToken().then((result){
-
+    this.authService.getToken().then((result) {
       setState(() {
-        tep= result.toString();
-        username=this.authService.GetUsername(tep);
+        tep = result.toString();
+        username = this.authService.GetUsername(tep);
 
-         this.authService.getperson(username).then((result) {
-
-           setState(() {
-             personResource=result;
-           });
-
-         });
-
-
-
+        this.authService.getperson(username).then((result) {
+          setState(() {
+            personResource = result;
+          });
+        });
       });
-
-
-    }) ;
-
-
-
+    });
   }
 
-  void AddForum(){
-
-
-    forumService.addForum(nameController.text.trim(), DescriptionController.text.trim(),personResource.id).then((result){
-
-
+  void AddForum() {
+    forumService
+        .addForum(nameController.text.trim(), DescriptionController.text.trim(),
+            personResource.id)
+        .then((result) {
       setState(() {
-
         Navigator.pop(context, true);
-
       });
-
-
     });
-
-
-
-
   }
 
   @override
@@ -89,26 +64,24 @@ class _ForumCreateState extends State<ForumCreate> {
               Text(personResource.username),
               Align(
                 alignment: Alignment.topLeft,
-                child: Text("Create Forum",
-                style: TextStyle(
-                  fontSize: 30
-                ),
+                child: Text(
+                  "Create Forum",
+                  style: TextStyle(fontSize: 30),
                 ),
               ),
               SizedBox(height: 30),
               Container(
                 child: Row(
                   children: [
-                    Text("Insert Name",
-                    style: TextStyle(
-                      fontSize: 20
-                    ),
+                    Text(
+                      "Insert Name",
+                      style: TextStyle(fontSize: 20),
                     ),
                     SizedBox(width: 30),
                     Container(
                       width: 200,
                       height: 30,
-                      child:TextField(
+                      child: TextField(
                         controller: nameController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -117,10 +90,8 @@ class _ForumCreateState extends State<ForumCreate> {
                           contentPadding: EdgeInsets.all(8),
                           filled: true,
                         ),
-                      ) ,
+                      ),
                     ),
-
-
                   ],
                 ),
               ),
@@ -132,24 +103,23 @@ class _ForumCreateState extends State<ForumCreate> {
                 maxLength: 1000,
                 controller: DescriptionController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                   hintText: 'Description',
-
                 ),
               ),
               SizedBox(height: 30),
               Align(
                 alignment: Alignment.bottomRight,
-                child:FloatingActionButton(onPressed:(){
-                  heroTag: "heroTag";
-                  AddForum();
-                },
+                child: FloatingActionButton(
+                  onPressed: () {
+                    heroTag:
+                    "heroTag";
+                    AddForum();
+                  },
                   shape: RoundedRectangleBorder(),
                   child: Text("Create"),
-                ) ,
+                ),
               )
-
-
             ],
           ),
         ),
@@ -157,4 +127,3 @@ class _ForumCreateState extends State<ForumCreate> {
     );
   }
 }
-

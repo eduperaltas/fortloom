@@ -1,11 +1,16 @@
 import 'package:fortloom/domain/entities/ArtistResource.dart';
-import 'package:fortloom/domain/entities/CreateForumResource.dart';
-import 'package:fortloom/domain/entities/ForumResource.dart';
-import 'package:fortloom/domain/entities/PersonResource.dart';
 import 'package:fortloom/domain/entities/PostResource.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert';
+
+String currentDate() {
+  var now = DateTime.now();
+  var formatter = DateFormat('yyyy-MM-dd');
+  String formatted = formatter.format(now);
+  return formatted;
+}
 
 class PostService {
   var baseUrl = "http://192.168.0.102:8080/api/v1/publications";
@@ -25,14 +30,19 @@ class PostService {
           item["artist"]["lastname"],
           item["artist"]["email"],
           item["artist"]["password"],
-          item["artist"]["content"],
+          item["artist"]["content"] ?? "",
           item["artist"]["artistfollowers"],
           item["artist"]["instagramLink"],
           item["artist"]["facebookLink"],
           item["artist"]["twitterLink"]);
 
-      Post postResource = Post(item["id"], item["publicationName"],
-          item["publicationDescription"], item["likes"], item["date"], artist);
+      Post postResource = Post(
+          item["id"],
+          item["publicationName"],
+          item["publicationDescription"],
+          item["likes"],
+          item["date"] ?? currentDate(),
+          artist);
       lstPosts.add(postResource);
     }
 
@@ -44,7 +54,7 @@ class PostService {
     Map data = {
       'publicationName': '$name',
       'publicationdescription': '$description',
-      'likes': 1,
+      'likes': 0,
     };
     var body = json.encode(data);
     final response = await http.post(
@@ -55,6 +65,22 @@ class PostService {
     log.i(response.body);
     log.i(response.statusCode);
 
+    return response;
+  }
+
+  Future<http.Response> uptPost(Post post) async {
+    Map data = {
+      'publicationName': post.publicationName,
+      'publicationdescription': post.publicationDescription,
+      'likes': post.likes,
+    };
+    var body = json.encode(data);
+    final response = await http.put(
+        Uri.parse("http://192.168.0.102:8080/api/v1/publications/${post.id}"),
+        headers: {"Content-Type": "application/json"},
+        body: body);
+    log.i(response.body);
+    log.i(response.statusCode);
     return response;
   }
 }

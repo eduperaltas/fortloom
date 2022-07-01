@@ -4,7 +4,7 @@ class Post {
   final int id;
   final String publicationName;
   final String publicationDescription;
-  final int likes;
+  int likes;
   final dynamic date;
   final ArtistResource artist;
   Post(this.id, this.publicationName, this.publicationDescription, this.likes,
